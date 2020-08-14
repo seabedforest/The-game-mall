@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block center_body %}
+
+    <div class="navbar_con">
+		<div class="navbar clearfix">
+			<div class="subnav_con fl">
+				<h1>全部商品分类</h1>
+				<span></span>
+				<ul class="subnav">
+                    {% for cag in categories %}
+                    <li><a href="/goods/info?cag={{ cag.id }}&page=1" class="{{ cag.cag_css }}">{{ cag.cag_name }}</a></li>
+                    {% endfor %}
+				</ul>
+			</div>
+			<ul class="navlist fl">
+				<li><a href="{% url 'index' %}">首页</a></li>
+				<li class="interval">|</li>
+				<li><a href="">商品商城</a></li>
+				<li class="interval">|</li>
+				<li><a href="">抽奖</a></li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="breadcrumb">
+		全部分类 > 首页
+		{% if id|default:' ' != ' ' %}
+        > 商品详情
+		{% endif %}
+	</div>
+
+{% block center_content %}
+
+{% endblock center_content %}
+
+
+
+{% endblock center_body %}

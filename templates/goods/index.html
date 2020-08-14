@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<script type="text/javascript" src="/static/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/static/js/slide.js"></script>
+{% endblock head %}
+
+{% block center_body %}
+
+<div class="navbar_con">
+    <div class="navbar">
+        <h1 class="fl">全部商品分类</h1>
+        <ul class="navlist fl">
+            <li><a href="{% url 'index' %}">首页</a></li>
+            <li class="interval">|</li>
+            <li><a href="#">商品商城</a></li>
+            <li class="interval">|</li>
+            <li><a href="#">抽奖</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="center_con clearfix">
+    <ul class="subnav fl">
+        {% for cag in categories %}
+        <li><a href="#model0{{ cag.id }}" class="{{ cag.cag_css }}">{{ cag.cag_name }}</a></li>
+        {% endfor %}
+    </ul>
+    <div class="slide fl">
+        <ul class="slide_pics">
+            <li><img src="/static/images/123.jpg" alt="幻灯片"></li>
+            <li><img src="/static/images/124.jpg" alt="幻灯片"></li>
+            <li><img src="/static/images/125.jpg" alt="幻灯片"></li>
+            <li><img src="/static/images/126.jpg" alt="幻灯片"></li>
+            <li><img src="/static/images/127.jpg" alt="幻灯片"></li>
+        </ul>
+        <div class="prev"></div>
+        <div class="next"></div>
+        <ul class="points"></ul>
+    </div>
+    <div class="adv fl">
+        <a href="#"><img src="/static/images/adv01.jpg"></a>
+        <a href="#"><img src="/static/images/adv02.jpg"></a>
+    </div>
+</div>
+{% for cag in categories %}
+<div class="list_model">
+    <div class="list_title clearfix">
+        <h3 class="fl" id="model0{{ cag.id }}">{{ cag.cag_name }}</h3>
+        <div class="subtitle fl">
+            <span>|</span>
+            {% for goods in cag.goods_list %}
+            <a href="/goods/detail?id={{ goods.id }}">{{ goods.goods_name|slice:'10' }}</a>
+            {% endfor %}
+        </div>
+        <a href="/goods/info?cag={{ cag.id }}&amp;page=1&amp;sort=1" class="goods_more fr" id="fruit_more">查看更多 ></a>
+    </div>
+
+    <div class="goods_con clearfix">
+        <div class="goods_banner fl"><img src="/media/{{ cag.cag_img }}"></div>
+        <ul class="goods_list fl">
+            {% for goods in cag.goods_list %}
+            <li>
+                <h4><a href="/goods/detail?id={{ goods.id }}">{{ goods.goods_name }}</a></h4>
+                <a href="/goods/detail?id={{ goods.id }}"><img src="/media/{{ goods.goods_img }}"></a>
+                <div class="prize"> ￥ {{ goods.goods_price }}</div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endfor %}
+<script type="text/javascript" src="/static/js/slide.js"></script>
+<script type="text/javascript">
+        BCSlideshow('focuspic');
+        var oFruit = document.getElementById('fruit_more');
+        var oShownum = document.getElementById('show_count');
+
+        var hasorder = localStorage.getItem('order_finish');
+
+        if(hasorder)
+        {
+        oShownum.innerHTML = '2';
+        }
+
+        oFruit.onclick = function(){
+        window.location.href = 'list.html';
+        }
+
+</script>
+
+{% endblock center_body %}

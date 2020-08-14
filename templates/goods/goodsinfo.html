@@ -1,0 +1,77 @@
+{% extends 'goods/base.html' %}
+
+{% block center_content %}
+
+	<div class="main_wrap clearfix">
+		<div class="l_wrap fl clearfix">
+			<div class="new_goods">
+				<h3>新品推荐</h3>
+				<ul>
+
+                    {% for goods in news %}
+{#                        新品推荐两种#}
+                        <li>
+                            <a href="/goods/detail?id={{ goods.id }}"><img src="{{ MEDIA_URL }}{{ goods.goods_img }}"></a>
+    						<h4><a href="/goods/detail?id={{ goods.id }}">{{ goods.goods_name }}</a></h4>
+    						<div class="prize">￥{{ goods.goods_price }}</div>
+                        </li>
+                    {% endfor %}
+				</ul>
+			</div>
+		</div>
+
+		<div class="r_wrap fr clearfix">
+			<div class="sort_bar">
+
+
+{#          注意视图函数中的传参顺序 另外在url中传递的链接全为字符型  #}
+                <a href="/goods/info?cag={{ cag_id }}&amp;page={{ page_id }}&amp;sort=1"
+                   {% if sort == '1' %}
+                    class="active"
+                   {% endif %}
+                    >默认</a>
+                <a href="/goods/info?cag={{ cag_id }}&amp;page={{ page_id }}&amp;sort=2"
+                   {% if sort == '2' %}
+                    class="active"
+                   {% endif %}
+                    >价格</a>
+			</div>
+
+			<ul class="goods_type_list clearfix">
+
+                {%  for g in page_data %}
+                <li>
+					<a href="/goods/detail?id={{ g.id }}"><img src="{{ MEDIA_URL }}{{ g.goods_img }}"></a>
+					<h4><a href="/goods/detail?id={{ g.id }}">{{ g.goods_name }}</a></h4>
+					<div class="operate">
+						<span class="prize">￥{{ g.goods_price }}</span>
+						<span class="unit">库存: {{ g.goods_inventory }}</span>
+						<a href="/cart/add{{ g.id }}_1/" class="add_goods" title="加入购物车"></a>
+					</div>
+				</li>
+                {% endfor %}
+			</ul>
+
+			<div class="pagenation">
+{#                判断是否是第一页#}
+                {% if page_data.has_previous %}
+                    <a href="/goods/info?cag={{ cag_id }}&amp;page={{ page_data.previous_page_number }}&amp;sort={{ sort }}">上一页</a>
+                {% endif %}
+
+                {% for pindex in paginator.page_range %}
+                    {% if pindex == page_data.number %}
+                        <a href="/goods/info?cag={{ cag_id }}&amp;page={{ pindex }}&amp;sort={{ sort }}" class="active">{{ pindex }}</a>
+                    {% else %}
+                        <a href="/goods/info?cag={{ cag_id }}&amp;page={{ pindex }}&amp;sort={{ sort }}">{{ pindex }}</a>
+                    {% endif %}
+                {% endfor %}
+
+{#                是否为第二页#}
+                {% if page_data.has_next %}
+				<a href="/goods/info?cag={{ cag_id }}&amp;page={{ page_data.next_page_number }}&amp;sort={{ sort }}">下一页></a>
+                {% endif %}
+			</div>
+		</div>
+	</div>
+
+{% endblock center_content %}
