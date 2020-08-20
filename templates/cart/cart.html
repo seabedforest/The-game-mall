@@ -102,9 +102,6 @@
                 //计算小计
                 total0=parseFloat(count)*parseFloat(price);
                 //显示小计
-{#                checked = $(this).prev().prev().prev().prev().prev().prev().find('input').attr('checked')#}
-{#                if(checked == 'checked')#}
-{#                {}#}
                     $(this).text(total0.toFixed(2));
                 //加到总计上
                 total1 += total0;
@@ -127,8 +124,8 @@
 
         s=s.substring(0,s.length-1);
 		
-		alert(s);
-        location.href = '/cart/submit_order?'+s ;
+		//alert(s);
+        location.href = '/cart/place_order?'+s ;
 
         }
 </script>

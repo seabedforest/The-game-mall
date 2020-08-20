@@ -6,9 +6,9 @@
 		<div class="left_menu_con clearfix">
 			<h3>用户中心</h3>
 			<ul>
-				<li><a href="{% url "df_user:info" %}">· 个人信息</a></li>
-				<li><a href="{% url "df_user:order" 1 %}" class="active">· 全部订单</a></li>
-				<li><a href="{% url "df_user:site" %}">· 收货地址</a></li>
+				<li><a href="{% url 'user_info' %}">· 个人信息</a></li>
+				<li><a href="{% url 'show_order' %}" class="active">· 全部订单</a></li>
+				<li><a href="{% url 'site' %}">· 收货地址</a></li>
 			</ul>
 		</div>
 		<div class="right_content clearfix">
@@ -24,10 +24,10 @@
 					<tbody>
 						<tr>
 							<td width="55%">
-                                {% for order_detail in orderinfo.orderdetailinfo_set.all %}
+                                {% for order_detail in orderinfo.ordergoods_set.all %}
 								<ul class="order_goods_list clearfix">					
-									<li class="col01"><img src="{{ MEDIA_URL }}{{ order_detail.goods.gpic }}"></li>
-                                    <li class="col02">{{ order_detail.goods.gtitle }}<em class="good_price">{{ order_detail.goods.gprice }}</em>元/<em>{{ order_detail.goods.gunit }}</em></li>
+									<li class="col01"><img src="{{ MEDIA_URL }}{{ order_detail.goods.goods_img }}"></li>
+                                    <li class="col02">{{ order_detail.goods.goods_name }}<em class="good_price">{{ order_detail.goods.goods_price }}</em>元<em></em></li>
 									<li class="col03">{{ order_detail.count }}件</li>
 									<li class="col04">11.80元</li>	
 								</ul>
@@ -44,19 +44,19 @@
 
 				<div class="pagenation">
                     {% if page.has_previous %}
-					    <a href="{% url "df_user:order" page.previous_page_number %}">上一页</a>
+					    <a href="{% url 'show_order' %}?page={{page.previous_page_number}}">上一页</a>
                     {% endif %}
 
                     {% for index in paginator.page_range %}
                         {% if index == page.number %}
-                            <a href="{% url "df_user:order" index %}" class="active">{{ index }}</a>
+                            <a href="{% url 'show_order' %}?page={{ index }}" class="active">{{ index }}</a>
                         {% else %}
-                            <a href="{% url "df_user:order" index %}">{{ index }}</a>
+                            <a href="{% url 'show_order' %}?page={{ index }}">{{ index }}</a>
                         {% endif %}
                     {% endfor %}
 
                     {% if page.has_next %}
-					    <a href="{% url "df_user:order" page.next_page_number %}">下一页></a>
+					    <a href="{% url 'show_order'  %}?page={{ page.next_page_number }}">下一页></a>
                     {% endif %}
 				</div>
 		</div>

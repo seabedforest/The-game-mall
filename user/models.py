@@ -23,7 +23,7 @@ class User(models.Model):
         return self.uname
 
 class GoodsBrowser(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="用户ID")
+    user = models.ForeignKey('User', on_delete=models.CASCADE, verbose_name="用户ID")
     good = models.ForeignKey(GoodsInfo, on_delete=models.CASCADE, verbose_name="商品ID")
     browser_time = models.DateTimeField(default=datetime.now, verbose_name="浏览时间")
 
@@ -65,4 +65,5 @@ class AddressInfo(models.Model):
     area = models.CharField('所在地区', max_length=100)
     addr = models.CharField('收货地址', max_length=100)
     name = models.CharField('收货人', max_length=30)
+    postcode = models.CharField(max_length=6, default="", verbose_name="邮编")
     telephone = models.CharField('联系电话', max_length=11)

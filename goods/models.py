@@ -18,7 +18,7 @@ class GoodsCategory(models.Model):
 class GoodsInfo(models.Model):
     goods_name = models.CharField('商品名称', max_length=100)
     goods_price = models.DecimalField('商品价格', max_digits=8, decimal_places=2, default=0.0)
-    goods_inventory = models.CharField('商品库存', max_length=20, default=0)
+    goods_inventory = models.IntegerField('商品库存', default=0)
     goods_desc = models.TextField(verbose_name='商品描述')
     gclick = models.IntegerField(verbose_name="点击量", default=0, null=False)
     goods_img = models.ImageField('商品图片', upload_to='goods')

@@ -20,11 +20,11 @@
 				{% endif %}
 				<div class="user_link fl">
 					<span>|</span>
-					<a href="#">用户中心</a>
+					<a href="{% url 'user_info' %}">用户中心</a>
 					<span>|</span>
 					<a href="{% url 'cart' %}">我的购物车</a>
 					<span>|</span>
-					<a href="#">我的订单</a>
+					<a href="{% url 'show_order' %}">我的订单</a>
 				</div>
 			</div>
 		</div>
@@ -45,7 +45,7 @@
                         alert("请输入搜索内容");
                         }
                         else{
-                            location.href = '#?q='+q+'&page=1'
+                            location.href = '{% url "search" %}?q='+q+'&page=1'
                         }
                     })
                 })

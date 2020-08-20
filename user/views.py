@@ -66,7 +66,7 @@ def login_handle(request):  # 没有利用ajax提交表单
         s1 = md5()
         s1.update(upwd.encode('utf8'))
         if s1.hexdigest() == users[0].password:
-            url = request.COOKIES.get('url', '/')
+            url = request.COOKIES.get('url', '/goods/indexs')
             red = HttpResponseRedirect(url)  # 继承与HttpResponse 在跳转的同时 设置一个cookie值
             # 是否勾选记住用户名，设置cookie
             if jizhu != 0:
@@ -117,7 +117,7 @@ def info(request):  # 用户中心
         'title': '用户中心',
         'page_name': 1,
         'user_phone': user.phone,
-        'user_address': user.user_set.addr,
+        'user_address': user.addressinfo_set.all().first().addr,
         'user_name': username,
         'goods_list': goods_list,
         'explain': explain,
@@ -126,33 +126,19 @@ def info(request):  # 用户中心
 
 
 @user_decorator.login
-def order(request, index):
-    user_id = request.session['user_id']
-    orders_list = OrderInfo.objects.filter(user_id=int(user_id)).order_by('-odate')
-    paginator = Paginator(orders_list, 2)
-    page = paginator.page(int(index))
-    context = {
-        'paginator': paginator,
-        'page': page,
-        # 'orders_list':orders_list,
-        'title': "用户中心",
-        'page_name': 1,
-    }
-    return render(request, 'df_user/user_center_order.html', context)
-
-
-@user_decorator.login
 def site(request):
     user = User.objects.get(id=request.session['user_id'])
+    addrinfo = user.addressinfo_set.all()
     if request.method == "POST":
-        user.ushou = request.POST.get('ushou')
-        user.uaddress = request.POST.get('uaddress')
-        user.uyoubian = request.POST.get('uyoubian')
-        user.uphone = request.POST.get('uphone')
-        user.save()
+        name = request.POST.get('ushou')
+        addr = request.POST.get('uaddress')
+        postcode = request.POST.get('uyoubian')
+        telephone = request.POST.get('uphone')
+        user.addressinfo_set.create(name=name, addr=addr, postcode=postcode, telephone=telephone)
     context = {
         'page_name': 1,
         'title': '用户中心',
         'user': user,
+        'addrinfo': addrinfo,
     }
-    return render(request, 'df_user/user_center_site.html', context)
+    return render(request, 'user/user_center_site.html', context)

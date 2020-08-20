@@ -5,28 +5,28 @@ from .models import OrderGoods, OrderInfo
 # Register your models here.
 class OrderInfoManager(admin.ModelAdmin):
     # 规定列表页中 显示哪些字段的值
-    list_display = ['id', 'order_id', 'order_area', 'order_addr', 'order_recv', 'order_tele', 'order_status']
+    list_display = ['oid', 'user', 'odate', 'oIsPay', 'ototal', 'oaddress']
     # 规定列表页中 点击哪个字段可以进入 详情页
-    list_display_links = ['order_id', 'order_recv']
+    list_display_links = ['oid', 'user']
     # 过滤器组件
-    list_filter = ['order_id', 'order_recv']
+    list_filter = ['oid', 'user']
     # 搜索框组件
-    search_fields = ['order_id', 'order_recv']
+    search_fields = ['oid', 'user']
     # 可直接在列表页编辑的字段
-    list_editable = ['order_tele']
+    list_editable = ['oaddress']
 
 
 class OrderGoodsManager(admin.ModelAdmin):
     # 规定列表页中 显示哪些字段的值
-    list_display = ['id', 'goods_info', 'goods_num', 'goods_order']
+    list_display = ['id', 'goods', 'count', 'price', 'order']
     # 规定列表页中 点击哪个字段可以进入 详情页
-    list_display_links = ['id', 'goods_order']
+    list_display_links = ['id', 'order']
     # 过滤器组件
-    list_filter = ['goods_order']
+    list_filter = ['order']
     # 搜索框组件
-    search_fields = ['goods_order']
+    search_fields = ['order']
     # 可直接在列表页编辑的字段
-    list_editable = ['goods_num']
+    list_editable = ['count']
 
 
 admin.site.register(OrderGoods, OrderGoodsManager)

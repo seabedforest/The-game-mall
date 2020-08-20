@@ -35,6 +35,11 @@
                     class="active"
                    {% endif %}
                     >价格</a>
+                <a href="/goods/info?cag={{ cag_id }}&amp;page={{ page_id }}&amp;sort=3"
+                   {% if sort == '3' %}
+                    class="active"
+                   {% endif %}
+                    >人气</a>
 			</div>
 
 			<ul class="goods_type_list clearfix">
@@ -46,7 +51,7 @@
 					<div class="operate">
 						<span class="prize">￥{{ g.goods_price }}</span>
 						<span class="unit">库存: {{ g.goods_inventory }}</span>
-						<a href="/cart/add{{ g.id }}_1/" class="add_goods" title="加入购物车"></a>
+						<a href="{% url 'add_cart' %}?gid={{ g.id }}" class="add_goods" title="加入购物车"></a>
 					</div>
 				</li>
                 {% endfor %}

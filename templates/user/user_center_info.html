@@ -7,9 +7,9 @@
 		<div class="left_menu_con clearfix">
 			<h3>用户中心</h3>
 			<ul>
-				<li><a href="{% url "df_user:info" %}" class="active">· 个人信息</a></li>
-				<li><a href="/user/order/1">· 全部订单</a></li>
-				<li><a href="{% url "df_user:site" %}">· 收货地址</a></li>
+				<li><a href="{% url 'user_info' %}" class="active">· 个人信息</a></li>
+				<li><a href="{% url 'show_order' %}?page=1">· 全部订单</a></li>
+				<li><a href="{% url 'site' %}">· 收货地址</a></li>
 			</ul>
 		</div>
 		<div class="right_content clearfix">
@@ -26,11 +26,11 @@
                 <ul class="goods_type_list clearfix">
                     {%  for good in goods_list %}
                     <li>
-                        <a href="/{{ good.id }}/"><img src="{{ MEDIA_URL }}{{ good.gpic }}"></a>
-                        <h4><a href="/{{ good.id }}/">{{ good.gtitle }}</a></h4>
+                        <a href="/goods/detail?id={{ good.id }}"><img src="{{ MEDIA_URL }}{{ good.goods_img }}"></a>
+                        <h4><a href="/goods/detail?id={{ good.id }}">{{ good.goods_name }}</a></h4>
                         <div class="operate">
-                            <span class="prize">￥{{ good.gprice }}</span>
-                            <span class="unit">{{ good.gprice }}/{{ good.gunit }}</span>
+                            <span class="prize">￥{{ good.goods_price }}</span>
+                            <span class="unit">{{ good.goods_price }}</span>
                             <a href="/cart/add{{ good.id }}_1/" class="add_goods" title="加入购物车"></a>
                         </div>
                     </li>
